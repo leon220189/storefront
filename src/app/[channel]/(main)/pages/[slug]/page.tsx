@@ -2,6 +2,7 @@ import { notFound } from "next/navigation";
 import { type Metadata } from "next";
 import edjsHTML from "editorjs-html";
 import xss from "xss";
+import { ContactHTML } from "./contactHTML";
 import { PageGetBySlugDocument } from "@/gql/graphql";
 import { executeGraphQL } from "@/lib/graphql";
 
@@ -24,6 +25,10 @@ export default async function Page({ params }: { params: { slug: string } }) {
 		variables: { slug: params.slug },
 		revalidate: 60,
 	});
+
+	if (params?.slug === "contact") {
+		return <ContactHTML></ContactHTML>;
+	}
 
 	if (!page) {
 		notFound();
